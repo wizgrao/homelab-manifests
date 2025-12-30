@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  ports:
+  - port: 8356
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: docker.io/gauravity4356/nginx-gaurav:fa65bbdba9534c3c4e36071ddb70a172cc3c113f
+        imagePullPolicy: Always
+        name: nginx
+        ports:
+        - containerPort: 80
