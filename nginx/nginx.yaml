@@ -26,7 +26,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: docker.io/gauravity4356/nginx-gaurav:fa65bbdba9534c3c4e36071ddb70a172cc3c113f
+      - image: docker.io/gauravity4356/nginx-gaurav:531f49006d1a14f40f3fd3637520e949e5bff958
         imagePullPolicy: Always
         name: nginx
         ports:
