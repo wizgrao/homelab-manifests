@@ -1,4 +1,13 @@
 apiVersion: v1
+data:
+  password: Y2h1dG5leWNodXRuZXk=
+  username: c2FtYmFy
+kind: Secret
+metadata:
+  name: samba-credentials
+type: Opaque
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: nginx-svc
@@ -10,6 +19,48 @@ spec:
   selector:
     app: nginx
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: samba-svc
+spec:
+  ports:
+  - name: smb
+    port: 445
+    protocol: TCP
+    targetPort: 445
+  selector:
+    app: samba
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: samba-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /srv/samba-share
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: samba-hostpath
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: samba-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: samba-hostpath
+  volumeName: samba-pv
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,8 +77,53 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: docker.io/gauravity4356/nginx-gaurav:aedc99c9514875840da5ccbb3bfb0e631f84bfe3
+      - image: docker.io/gauravity4356/nginx-gaurav:3ffb9dc09c84257101e2f458854e07633082b7a0
         imagePullPolicy: Always
         name: nginx
         ports:
         - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samba
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: samba
+  template:
+    metadata:
+      labels:
+        app: samba
+    spec:
+      containers:
+      - args:
+        - samba.sh -s "public;/share;yes;no;yes;all" -p -u "${SAMBA_USERNAME};${SAMBA_PASSWORD}"
+        command:
+        - /bin/sh
+        - -c
+        env:
+        - name: SAMBA_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: samba-credentials
+        - name: SAMBA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: samba-credentials
+        image: dperson/samba:latest
+        name: samba
+        ports:
+        - containerPort: 445
+          name: smb
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /share
+          name: samba-data
+      volumes:
+      - name: samba-data
+        persistentVolumeClaim:
+          claimName: samba-pvc
