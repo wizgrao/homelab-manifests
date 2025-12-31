@@ -77,7 +77,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: docker.io/gauravity4356/nginx-gaurav:3ffb9dc09c84257101e2f458854e07633082b7a0
+      - image: docker.io/gauravity4356/nginx-gaurav:65d6801f3e5792424c84d2686758a1c792e0ce71
         imagePullPolicy: Always
         name: nginx
         ports:
@@ -99,7 +99,7 @@ spec:
     spec:
       containers:
       - args:
-        - samba.sh -s "public;/share;yes;no;yes;all" -p -u "${SAMBA_USERNAME};${SAMBA_PASSWORD}"
+        - samba.sh -s "sambar;/share;yes;no;no;${SAMBA_USERNAME}" -p -u "${SAMBA_USERNAME};${SAMBA_PASSWORD}"
         command:
         - /bin/sh
         - -c
