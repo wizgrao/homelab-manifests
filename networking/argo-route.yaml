@@ -5,8 +5,8 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
-      namespace: default
+    - name: argo-gateway
+      namespace: argocd
       sectionName: web
   hostnames:
     - argocd.example.com
