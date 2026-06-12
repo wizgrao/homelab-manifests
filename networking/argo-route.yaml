@@ -8,8 +8,6 @@ spec:
     - name: argo-gateway
       namespace: argocd
       sectionName: web
-  hostnames:
-    - argocd.example.com
   rules:
     - backendRefs:
         - name: argocd-server
