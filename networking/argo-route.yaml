@@ -7,7 +7,7 @@ spec:
   parentRefs:
     - name: argo-gateway
       namespace: argocd
-      sectionName: web
+      sectionName: websecure
   hostnames:
     - argo.internal.gauravity.com
   rules:

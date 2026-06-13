@@ -12,3 +12,14 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - name: websecure
+      protocol: HTTPS
+      port: 8443
+      hostname: "*.internal.gauravity.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: internal-gauravity-com-tls
+      allowedRoutes:
+        namespaces:
+          from: All
