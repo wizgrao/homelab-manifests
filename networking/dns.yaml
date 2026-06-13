@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gauravity-coredns
+  namespace: default
+data:
+  Corefile: |
+    gauravity.com:53 {
+        errors
+        log
+
+        template IN A argo.gauravity.com {
+            answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
+        }
+
+        template IN AAAA argo.gauravity.com {
+            answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
+        }
+
+        template IN CNAME argo.gauravity.com {
+            answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
+        }
+
+        forward . 100.100.100.100
+        cache 30
+    }
+
+    .:53 {
+        errors
+        forward . 100.100.100.100
+        cache 30
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gauravity-coredns
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gauravity-coredns
+  template:
+    metadata:
+      labels:
+        app: gauravity-coredns
+    spec:
+      containers:
+        - name: coredns
+          image: coredns/coredns:1.12.3
+          args:
+            - -conf
+            - /etc/coredns/Corefile
+          ports:
+            - name: dns-udp
+              containerPort: 53
+              protocol: UDP
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /etc/coredns
+      volumes:
+        - name: config
+          configMap:
+            name: gauravity-coredns
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gauravity-dns
+  namespace: default
+  annotations:
+    tailscale.com/expose: "true"
+    tailscale.com/hostname: "gauravity-dns"
+spec:
+  type: ClusterIP
+  selector:
+    app: gauravity-coredns
+  ports:
+    - name: dns-udp
+      port: 53
+      targetPort: 53
+      protocol: UDP
+    - name: dns-tcp
+      port: 53
+      targetPort: 53
+      protocol: TCP
