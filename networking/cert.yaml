@@ -40,7 +40,7 @@ metadata:
 spec:
   secretName: internal-gauravity-com-tls
   issuerRef:
-    name: letsencrypt-staging-cloudflare
+    name: letsencrypt-prod-cloudflare
     kind: ClusterIssuer
   dnsNames:
     - "*.internal.gauravity.com"
