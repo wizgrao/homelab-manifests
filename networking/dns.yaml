@@ -5,19 +5,22 @@ metadata:
   namespace: default
 data:
   Corefile: |
-    gauravity.com:53 {
+    internal.gauravity.com:53 {
         errors
         log
 
-        template IN A argo.gauravity.com {
+        template IN A {
+            match ^(.+)\.internal\.gauravity\.com\.$
             answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
         }
 
-        template IN AAAA argo.gauravity.com {
+        template IN AAAA {
+            match ^(.+)\.internal\.gauravity\.com\.$
             answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
         }
 
-        template IN CNAME argo.gauravity.com {
+        template IN CNAME {
+            match ^(.+)\.internal\.gauravity\.com\.$
             answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
         }
 

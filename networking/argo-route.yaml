@@ -9,7 +9,7 @@ spec:
       namespace: argocd
       sectionName: web
   hostnames:
-    - argo.gauravity.com
+    - argo.internal.gauravity.com
   rules:
     - backendRefs:
         - name: argocd-server
