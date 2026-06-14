@@ -44,3 +44,17 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - "*.internal.gauravity.com"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: gauravity-com
+  namespace: default
+spec:
+  secretName: gauravity-com-tls
+  issuerRef:
+    name: letsencrypt-staging-cloudflare
+    kind: ClusterIssuer
+  dnsNames:
+    - "*.gauravity.com"
+    - "gauravity.com"
