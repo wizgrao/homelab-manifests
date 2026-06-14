@@ -10,6 +10,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: backups.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -482,6 +483,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: clusterimagecatalogs.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -669,6 +671,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: clusters.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -8172,6 +8175,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: databases.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -8766,6 +8770,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: failoverquorums.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -8843,6 +8848,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: imagecatalogs.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -9029,6 +9035,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: poolers.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -18409,6 +18416,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: publications.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -18604,6 +18612,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: scheduledbackups.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -18795,6 +18804,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.1
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: subscriptions.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
