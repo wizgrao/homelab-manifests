@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: argocd
+  name: gauravity-route
   namespace: default
 spec:
   parentRefs:
@@ -9,7 +9,8 @@ spec:
       namespace: default
       sectionName: websecure
   hostnames:
-    - dev.gauravity.com
+    - gauravity.com
+    - www.gauravity.com
   rules:
     - backendRefs:
         - name: nginx-svc
