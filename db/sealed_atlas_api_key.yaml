@@ -1,0 +1,13 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: atlas-api-key
+  namespace: default
+spec:
+  encryptedData:
+    api-key: AgC6ILC2oAEihq7b37JVU/dNH/tePcrfcvqfD7aMm3mZtggt1aaM4e0ljOohbOKGW1OFsFO+EZBHB0xaQmwCCm6eVhUQM4Yuqf1A/jgs/E9/9nJt7ETmJlrmj/gFjlY6Zd4m8LdLenySS4ETAMWz0SsuWk9aP9HS1RukyiqeqmOwlMI9tIB/BuP0WGbAlqQncGO52+Fc53y7KQx+4/ibAObEUD1jhHZCK2mas+GwJS9toccLbilGcdblgXqvF24Jn9Itbf5ifv+cc6GQ0gm7UltXGUzJkqVtqB1e4dCugeG12FLDcobKsWIYaK/s6dhRpCNpCYkEYp1R87xalptjxpUMlqrRsiwVlEmcTBZJhLMBCxnDhNpsV/MfGmwVJZHEMFh8FhpXKyTSua2fYj1bQn6G4JyqUTvOCFl8ErB77gPNVJi//g3rlGIuyvZ4w0eVxai3TcVHcZWLEn0aiUrcMFrBJ9doXh5PanelgIYnOqXue4giaWMo4i5/sbO4uHQU8nNQEI50AVxw/fVIBG4/qSAgLVhBsA5nJNEmOultT65esS8NzXr/lJ+84pAUcIYyjRpHcQGKTFhWvcrnCqOuMgXuW3NUdmrWySbf5Aevs7YXVabesOQFC/5DjJ1nxi7H8RI0eccoxZUhqkysAFzTgS2B+giCrBgkjVmOp4YMg8/vczyVoCumkowyslqWbCX3qq3EaEmu4qdCif1pAk4iufTbSxk+9bHI4vjg9glPDPbtBXXqYryqNY2dLYCyeJV7zBLR7MygF8QtHwozP5xZXpgWfzcY2m8hIc0gXkafCoyUU5ucku8=
+  template:
+    metadata:
+      name: atlas-api-key
+      namespace: default
