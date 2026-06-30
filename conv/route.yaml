@@ -1,0 +1,17 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: conv-route
+  namespace: default
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: default
+      sectionName: websecure
+  hostnames:
+    - conv.gauravity.com
+  rules:
+    - backendRefs:
+        - name: conv-svc
+          namespace: default
+          port: 8356
