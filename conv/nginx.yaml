@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: conv-svc
+spec:
+  ports:
+  - port: 8356
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: conv
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conv-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conv
+  template:
+    metadata:
+      labels:
+        app: conv
+    spec:
+      containers:
+        - image: docker.io/gauravity4356/conv:latest
+        imagePullPolicy: Always
+        name: conv
+        ports:
+        - containerPort: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: conv-route
+  namespace: default
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: default
+      sectionName: websecure
+  hostnames:
+    - conv.gauravity.com
+  rules:
+    - backendRefs:
+        - name: conv-svc
+          namespace: default
+          port: 8356
