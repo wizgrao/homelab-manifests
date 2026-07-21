@@ -13,7 +13,9 @@ spec:
       releaseName: listmonk
       values: |
         postgres:
-          existingSecret: pg-creds
+          username: pgmonk
+          password: passsss
+
 
   destination:
     server: https://kubernetes.default.svc
