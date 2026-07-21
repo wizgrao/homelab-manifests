@@ -16,3 +16,21 @@ spec:
         - name: nginx-svc
           namespace: default
           port: 8356
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: listmonk-route
+  namespace: default
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: default
+      sectionName: websecure
+  hostnames:
+    - listmonk.gauravity.com
+  rules:
+    - backendRefs:
+        - name: listmonk-listmonk
+          namespace: default
+          port: 80
