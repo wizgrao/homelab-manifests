@@ -13,7 +13,6 @@ spec:
       releaseName: listmonk
       values: |
         postgres:
-          username: pgmonk
           password: passsss
 
 
