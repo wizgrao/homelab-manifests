@@ -11,6 +11,9 @@ spec:
     targetRevision: 5.0.3-3
     helm:
       releaseName: listmonk
+      values: |
+        postgres:
+          existingSecret: pg-creds
 
   destination:
     server: https://kubernetes.default.svc
