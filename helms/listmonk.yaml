@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: listmonk
+  namespace: listmonk
+spec:
+  project: default
+  source:
+    repoURL: https://th0th.github.io/helm-charts
+    chart: listmonk
+    targetRevision: 5.0.3-3
+    helm:
+      releaseName: listmonk
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: listmonk
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
