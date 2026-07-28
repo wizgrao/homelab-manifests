@@ -18,3 +18,30 @@ spec:
           name: conv
           ports:
           - containerPort: 8080
+
+          env:
+          - name: DATABASE_NAME
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: dbname
+          - name: DATABASE_PORT
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: port
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: username
+          - name: DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: host
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: password
