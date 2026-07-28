@@ -16,7 +16,7 @@ spec:
           namespace: argocd
           port: 80
 ---
-apiVersion: gateway.networking.k8s.io/v1
+apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: TCPRoute
 metadata:
   name: internal-tcp
@@ -26,8 +26,6 @@ spec:
     - name: argo-gateway
       namespace: argocd
       sectionName: db-tcp
-  hostnames:
-    - pg.internal.gauravity.com
   rules:
     - backendRefs:
         - name: gauravity-pg-rw
