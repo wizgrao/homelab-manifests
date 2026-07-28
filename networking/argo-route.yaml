@@ -28,6 +28,6 @@ spec:
       sectionName: db-tcp
   rules:
     - backendRefs:
-        - name: gauravity-pg-rw
+        - name: gaurav-pg-rw
           namespace: default
           port: 5432
