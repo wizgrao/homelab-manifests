@@ -9,22 +9,11 @@ data:
         errors
         log
 
-        template IN A {
+        template IN ANY {
             match ^(.+)\.internal\.gauravity\.com\.$
             answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
         }
 
-        template IN AAAA {
-            match ^(.+)\.internal\.gauravity\.com\.$
-            answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
-        }
-
-        template IN CNAME {
-            match ^(.+)\.internal\.gauravity\.com\.$
-            answer "{{ .Name }} 60 IN CNAME gaurav-pi5.tail906543.ts.net."
-        }
-
-        forward . 100.100.100.100
         cache 30
     }
 
