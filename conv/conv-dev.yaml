@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conv-dev-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conv-dev
+  template:
+    metadata:
+      labels:
+        app: conv-dev
+    spec:
+      volumes:
+      - name: conv-data
+        persistentVolumeClaim:
+          claimName: conv-dev-pvc
+      containers:
+        - image: docker.io/gauravity4/conv-dev:latest
+          imagePullPolicy: Always
+          name: conv
+          volumeMounts:
+            - mountPath: /share
+              name: conv-data
+          ports:
+          - containerPort: 8080
+          env:
+          - name: DATABASE_NAME
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: dbname
+          - name: DATABASE_PORT
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: port
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: username
+          - name: DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: host
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: password
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: conv-dev-pv
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 2Gi
+  hostPath:
+    path: /srv/convert-share-dev
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: conv-dev-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: manual
+  volumeName: conv-dev-pv
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: conv-dev-route
+  namespace: default
+spec:
+  parentRefs:
+    - name: argo-gateway
+      namespace: argocd
+      sectionName: websecure
+  hostnames:
+    - conv-dev.internal.gauravity.com
+  rules:
+    - backendRefs:
+        - name: conv-dev-svc
+          namespace: default
+          port: 8356
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conv-dev-svc
+spec:
+  ports:
+  - port: 8356
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: conv-dev
