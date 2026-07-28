@@ -6,6 +6,12 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
+    - name: db-tcp
+      protocol: TCP
+      port: 6432
+      allowedRoutes:
+        namespaces:
+          from: All
     - name: web
       protocol: HTTP
       port: 8000

@@ -15,3 +15,21 @@ spec:
         - name: argocd-server
           namespace: argocd
           port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: TCPRoute
+metadata:
+  name: internal-tcp
+  namespace: default
+spec:
+  parentRefs:
+    - name: argo-gateway
+      namespace: argocd
+      sectionName: db-tcp
+  hostnames:
+    - pg.internal.gauravity.com
+  rules:
+    - backendRefs:
+        - name: gauravity-pg-rw
+          namespace: default
+          port: 5432
