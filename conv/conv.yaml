@@ -12,13 +12,19 @@ spec:
       labels:
         app: conv
     spec:
+      volumes:
+      - name: conv-data
+        persistentVolumeClaim:
+          claimName: conv-pvc
       containers:
         - image: docker.io/gauravity4356/conv:latest
           imagePullPolicy: Always
           name: conv
+          volumeMounts:
+            - mountPath: /share
+              name: conv-data
           ports:
           - containerPort: 8080
-
           env:
           - name: DATABASE_NAME
             valueFrom:
@@ -45,3 +51,31 @@ spec:
               secretKeyRef:
                 name: gaurav-pg-app
                 key: password
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: conv-pv
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /srv/convert-share
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: conv-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: manual
+  volumeName: conv-pv
