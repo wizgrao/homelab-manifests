@@ -17,7 +17,7 @@ spec:
         persistentVolumeClaim:
           claimName: conv-pvc
       containers:
-        - image: docker.io/gauravity4356/conv:latest
+        - image: docker.io/gauravity4356/conv-prod:latest
           imagePullPolicy: Always
           name: conv
           volumeMounts:
@@ -26,6 +26,8 @@ spec:
           ports:
           - containerPort: 8080
           env:
+          - name: SHARE_PATH
+            value: /share
           - name: DATABASE_NAME
             valueFrom:
               secretKeyRef:
@@ -46,6 +48,11 @@ spec:
               secretKeyRef:
                 name: gaurav-pg-app
                 key: host
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: gaurav-pg-app
+                key: uri
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
